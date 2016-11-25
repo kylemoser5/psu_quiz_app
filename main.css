@@ -1,0 +1,14 @@
+h1 {
+	text-align: center;
+	font-family: fantasy;
+	color: navy;
+}
+
+#test_status, #test {
+	font-family: fantasy;
+	color: navy;
+	text-align: center;
+	border-radius: 1px solid navy;
+	padding: 10px, 40px, 40px, 40px;
+}
+
