@@ -1,10 +1,10 @@
 h1 {
 	text-align: center;
-	font-family: fantasy;
+	font-family: impact;
 	color: navy;
 }
 
-#test_status, #test {
+#test_status, #test, #restart {
 	font-family: fantasy;
 	color: navy;
 	text-align: center;

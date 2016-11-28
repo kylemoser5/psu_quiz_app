@@ -1,12 +1,17 @@
-var currentQuestion = 0, test, test_status, picture, question, 
+var currentQuestion = 0, test, test_status, question, 
 choice, choices, chA, chB, chC, chD, correct = 0;
 
 var questions = [
-	["How many wins, all-time, does Penn State football have?", "863", "450", "680", "951", "A"],
+	["How many wins, all-time, does Penn State have?", "863", "450", "680", "951", "A"],
 	["When was the last time Penn State was crowned as Big Ten Champions?", "2010", "1995", "2008", "2005", "C"],
-	["In what year was Beaver Stadium built?", "1970", "1920", "1959", "1855", "C"],
+	["In what year was the construction of Beaver Stadium completed?", "1970", "1920", "1959", "1958", "C"],
 	["How many bowl games has Penn State played in total?", "65", "45", "35", "70", "B"],
-	["What team did Penn State beat to earn its first ever win?", "Lehigh", "Notre Dame", "Brown", "Bucknell", "A"]
+	["What team did Penn State beat to earn its first ever win?", "Lehigh", "Notre Dame", "Brown", "Bucknell", "A"],
+	["Who is Penn State's all-time leading rusher?", "Curt Warner", "Larry Johnson, Jr.", "Evan Royster", "Kijana Carter", "C"],
+	["Which team did Penn State beat to earn James Franklin his first win as Head Coach?", "Central Florida", "Akron", "Kent State", "Buffalo", "A"],
+	["In what year did Penn State play in its first ever Rose Bowl game?", "1950", "1986", "1923", "1995", "C"],
+	["What were Penn State's original colors?", "Black & White", "Black & Blue", "Black & Yellow", "Black & Pink", "D"],
+	["How many times has Beaver Stadium been expanded since its original construction?", "5", "6", "7", "3", "B"]
 ];
 
 function _(x) {
@@ -20,6 +25,7 @@ function renderQuestion () {
 		audio.play();
 		test.innerHTML = "<h3>You got "+correct+" correct out of "+questions.length;
 		_("test_status").innerHTML = "We Are!!!!";
+		_("restart").innerHTML = "<button onclick='restartQuiz()'>Restart Quiz</button>";
 		currentQuestion=0;
 		score=0;
 		return false;
@@ -36,7 +42,7 @@ function renderQuestion () {
 	test.innerHTML+="<input type='radio' name='choices' value='B'>"+chB+"<br>";
 	test.innerHTML+="<input type='radio' name='choices' value='C'>"+chC+"<br>";
 	test.innerHTML+="<input type='radio' name='choices' value='D'>"+chD+"<br><br>";
-	test.innerHTML+="<button onclick='checkAnswer()'>Submit Answer</button>";
+	test.innerHTML+="<button onclick='checkAnswer()'>Next Question</button>";
 }
 
 function checkAnswer() {
@@ -51,6 +57,11 @@ function checkAnswer() {
 	}
 
 	currentQuestion++;
+	renderQuestion();
+}
+
+function restartQuiz() {
+	currentQuestion = 0;
 	renderQuestion();
 }
 
