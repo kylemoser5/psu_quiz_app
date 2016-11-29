@@ -1,5 +1,5 @@
 var currentQuestion = 0, test, test_status, question, 
-choice, choices, chA, chB, chC, chD, correct = 0;
+choice, choices, chA, chB, chC, chD, correct = 0, incorrect=0;
 
 var questions = [
 	["How many wins, all-time, does Penn State have?", "863", "450", "680", "951", "A"],
@@ -18,30 +18,38 @@ function _(x) {
 	return document.getElementById(x);
 }
 
+function beginQuiz () {
+	_("begin_quiz").innerHTML = "This Penn State quiz app tests your knowledge of PSU football.  See how many questions you can get correct!";
+	_("begin_quiz").innerHTML += "<button onclick='renderQuestion()'>Begin Quiz</button>";
+}
+
 function renderQuestion () {
 	test = _("test");
+	// once the quiz is finished a roar.mp3 will sound and you will get your score
+	_("begin_quiz").innerHTML = " ";
+	_("test_status").innerHTML = "Question "+(currentQuestion+1)+" of "+questions.length;
+	_("correct_answers").innerHTML = "(" + correct + " correct, " + incorrect + " incorrect)";
 	if (currentQuestion >= questions.length) {
 		var audio = new Audio('roar.mp3');
 		audio.play();
 		test.innerHTML = "<h3>You got "+correct+" correct out of "+questions.length;
 		_("test_status").innerHTML = "We Are!!!!";
-		_("restart").innerHTML = "<button onclick='restartQuiz()'>Restart Quiz</button>";
+		document.getElementById("restart").classList.remove("hide");
+		_("restart").innerHTML = "<button class='show' onclick='restartQuiz()'>Restart Quiz</button>";
 		currentQuestion=0;
 		score=0;
 		return false;
-	}
-
-	_("test_status").innerHTML = "Question "+(currentQuestion+1)+" of "+questions.length;
+	} 
 	question = questions[currentQuestion][0];
 	chA = questions[currentQuestion][1];
 	chB = questions[currentQuestion][2];
 	chC = questions[currentQuestion][3];
 	chD = questions[currentQuestion][4];
 	test.innerHTML= "<h3>"+question+"</h3>";
-	test.innerHTML+="<input type='radio' name='choices' value='A'>"+chA+"<br>";
-	test.innerHTML+="<input type='radio' name='choices' value='B'>"+chB+"<br>";
-	test.innerHTML+="<input type='radio' name='choices' value='C'>"+chC+"<br>";
-	test.innerHTML+="<input type='radio' name='choices' value='D'>"+chD+"<br><br>";
+	test.innerHTML+="<input type='radio' name='choices' value='A' required>"+chA+"<br>";
+	test.innerHTML+="<input type='radio' name='choices' value='B' required>"+chB+"<br>";
+	test.innerHTML+="<input type='radio' name='choices' value='C' required>"+chC+"<br>";
+	test.innerHTML+="<input type='radio' name='choices' value='D' required>"+chD+"<br><br>";
 	test.innerHTML+="<button onclick='checkAnswer()'>Next Question</button>";
 }
 
@@ -51,21 +59,37 @@ function checkAnswer() {
 		if (choices[i].checked) {
 			choice = choices[i].value;
 		}
+
 	}
 	if (choice == questions[currentQuestion][5]) {
 		correct++;
 	}
+	if (choice !== questions[currentQuestion][5]) {
+		incorrect++;
+	}
 
-	currentQuestion++;
-	renderQuestion();
-}
+	if (choice == undefined){
+		alert('you need to answer the question')
+	}
+	else {
+		currentQuestion++;
+		renderQuestion();
+		}
+	}
 
 function restartQuiz() {
+	_("test_status").innerHTML = " ";
+	_("test").innerHTML = " ";
+	_("correct_answers").innerHTML = " ";
+	document.getElementById("restart").classList.add("hide");
 	currentQuestion = 0;
-	renderQuestion();
+	correct = 0;
+	incorrect = 0;
+	beginQuiz();
+
 }
 
-window.addEventListener("load", renderQuestion, false);
+console.log(beginQuiz());
 
 
 
