@@ -27,6 +27,7 @@ function renderQuestion () {
 	test = _("test");
 	// once the quiz is finished a roar.mp3 will sound and you will get your score
 	_("begin_quiz").innerHTML = " ";
+	_("message").innerHTML = " ";
 	_("test_status").innerHTML = "Question "+(currentQuestion+1)+" of "+questions.length;
 	_("correct_answers").innerHTML = "(" + correct + " correct, " + incorrect + " incorrect)";
 	if (currentQuestion >= questions.length) {
@@ -69,9 +70,12 @@ function checkAnswer() {
 	}
 
 	if (choice == undefined){
-		alert('you need to answer the question')
+		_("message").innerHTML = "you must submit an answer!";
+		incorrect--;
 	}
+
 	else {
+		choice = undefined;
 		currentQuestion++;
 		renderQuestion();
 		}
@@ -89,7 +93,7 @@ function restartQuiz() {
 
 }
 
-console.log(beginQuiz());
+beginQuiz();
 
 
 
